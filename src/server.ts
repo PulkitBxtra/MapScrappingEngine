@@ -21,6 +21,7 @@ async function main(): Promise<void> {
   await app.register(cors, { origin: true });
 
   app.get('/health', async () => ({ ok: true }));
+  app.get('/keepalive', async () => ({ ok: true, ts: Date.now() }));
 
   await registerScrapeRoutes(app);
   await registerWorker();

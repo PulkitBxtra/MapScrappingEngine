@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: mmt-scraper
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+      - key: LOG_LEVEL
+        value: info
+      - key: SCRAPE_HEADLESS
+        value: "true"
+      - key: DETAIL_JITTER_MIN_MS
+        value: "800"
+      - key: DETAIL_JITTER_MAX_MS
+        value: "1500"
