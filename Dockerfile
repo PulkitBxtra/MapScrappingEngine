@@ -17,7 +17,7 @@ RUN npm run build
 RUN npm prune --omit=dev
 
 
-FROM mcr.microsoft.com/playwright:v1.48.2-jammy AS runtime
+FROM mcr.microsoft.com/playwright:v1.59.1-jammy AS runtime
 WORKDIR /app
 
 ENV NODE_ENV=production \

@@ -66,6 +66,29 @@ export async function registerScrapeRoutes(app: FastifyInstance): Promise<void> 
     const hotels = await prisma.hotel.findMany({
       where: { searchId },
       orderBy: { priceInr: 'asc' },
+      select: {
+        id: true,
+        searchId: true,
+        mmtHotelId: true,
+        name: true,
+        starRating: true,
+        userRating: true,
+        userRatingCount: true,
+        priceInr: true,
+        originalPriceInr: true,
+        discountPct: true,
+        address: true,
+        locality: true,
+        city: true,
+        latitude: true,
+        longitude: true,
+        description: true,
+        amenities: true,
+        imageUrls: true,
+        thumbnailUrl: true,
+        detailUrl: true,
+        scrapedAt: true,
+      },
     });
 
     return reply.send({
