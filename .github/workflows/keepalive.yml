@@ -16,13 +16,11 @@ jobs:
     steps:
       - name: Ping /keepalive
         env:
-          KEEPALIVE_URL: ${{ vars.KEEPALIVE_URL }}
+          KEEPALIVE_URL: ${{ vars.KEEPALIVE_URL || 'https://mmt-scraper-0sff.onrender.com/keepalive' }}
         run: |
-          if [ -z "$KEEPALIVE_URL" ]; then
-            echo "KEEPALIVE_URL repo variable is not set" >&2
-            exit 1
-          fi
+          echo "pinging $KEEPALIVE_URL"
           curl --fail --silent --show-error \
                --max-time 30 \
                --retry 3 --retry-delay 5 --retry-connrefused \
                "$KEEPALIVE_URL"
+          echo

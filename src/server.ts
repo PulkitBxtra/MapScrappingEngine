@@ -3,6 +3,7 @@ import cors from '@fastify/cors';
 import { config } from './config.js';
 import { logger } from './logger.js';
 import { registerScrapeRoutes } from './routes/scrape.js';
+import { registerDebugRoutes } from './routes/debug.js';
 import { registerWorker } from './queue/worker.js';
 import { stopBoss } from './queue/boss.js';
 import { prisma } from './db/client.js';
@@ -24,6 +25,7 @@ async function main(): Promise<void> {
   app.get('/keepalive', async () => ({ ok: true, ts: Date.now() }));
 
   await registerScrapeRoutes(app);
+  await registerDebugRoutes(app);
   await registerWorker();
 
   await app.listen({ port: config.PORT, host: '0.0.0.0' });
