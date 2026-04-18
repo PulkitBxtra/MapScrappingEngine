@@ -32,7 +32,7 @@ model Hotel {
   id               String   @id @default(uuid())
   searchId         String
   search           Search   @relation(fields: [searchId], references: [id], onDelete: Cascade)
-  mmtHotelId       String
+  mmtHotelId       String   @unique
   name             String
   starRating       Float?
   userRating       Float?
@@ -53,7 +53,6 @@ model Hotel {
   raw              Json?
   scrapedAt        DateTime @default(now())
 
-  @@unique([searchId, mmtHotelId])
   @@index([city])
   @@index([latitude, longitude])
 }

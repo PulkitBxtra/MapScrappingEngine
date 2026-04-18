@@ -109,7 +109,7 @@ export const repo = {
     };
 
     await prisma.hotel.upsert({
-      where: { searchId_mmtHotelId: { searchId: input.searchId, mmtHotelId: input.mmtHotelId } },
+      where: { mmtHotelId: input.mmtHotelId },
       create: data,
       update: data,
     });

@@ -89,7 +89,7 @@ Statuses: `queued` → `running` → `completed` | `failed`.
 | Table    | Purpose                                                  |
 | -------- | -------------------------------------------------------- |
 | `Search` | One row per search query; tracks status and job id.      |
-| `Hotel`  | One row per scraped hotel; unique on `(searchId, mmtHotelId)`. Stores name, pricing, rating, locality, address, `latitude`/`longitude`, `imageUrls` (JSON array), `amenities`, description, and a `raw` JSON blob for debugging. |
+| `Hotel`  | One row per scraped hotel; unique on `mmtHotelId` (latest scrape wins — `searchId` points at the most recent search that saw the hotel). Stores name, pricing, rating, locality, address, `latitude`/`longitude`, `imageUrls` (JSON array), `amenities`, description, and a `raw` JSON blob for debugging. |
 
 `pg-boss` creates its own `pgboss` schema on first run.
 
@@ -102,7 +102,7 @@ Statuses: `queued` → `running` → `completed` | `failed`.
    - JSON-LD block is parsed for `geo.latitude`/`geo.longitude` and `addressLocality`.
    - If no coords there, responses are sniffed for geo JSON and map iframe / static-map URLs are parsed as fallbacks.
    - Gallery images, amenities, full address, and description are extracted from the DOM.
-5. Each hotel is upserted keyed by `(searchId, mmtHotelId)`.
+5. Each hotel is upserted keyed by `mmtHotelId` — re-scrapes overwrite the existing row.
 6. `Search.status` is flipped to `completed` (or `failed` with `errorMsg`).
 
 ## Verifying end-to-end
